@@ -22,7 +22,7 @@ module.exports = {
       }
     }
   },
-  lintOnSave: 'error', // 设置eslint报错时停止代码编译
+  lintOnSave: 'warning', // 设置eslint报错时停止代码编译
   productionSourceMap: false, // 不需要生产环境的 source map（减小dist文件大小，加速构建）
   transpileDependencies: [], // 自动检测Polyfill转换
   devServer: {
@@ -51,6 +51,7 @@ module.exports = {
       .set('@router', resolve('./src/router'))
       .set('@store', resolve('./src/store'))
       .set('@utils', resolve('./src/utils'))
+      .set('@config', resolve('./src/config'))
   },
   // 配置打包 js、css文件为.gz格式，优化加载速度  （参考：https://blog.csdn.net/qq_31677507/article/details/102742196）
   configureWebpack: config => {

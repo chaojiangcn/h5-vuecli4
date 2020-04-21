@@ -15,15 +15,12 @@ export default function createLogger({
         return
       }
       const nextState = deepCopy(state)
-
       if (filter(mutation, prevState, nextState)) {
         const time = new Date()
         const formattedTime = ` @ ${pad(time.getHours(), 2)}:${pad(time.getMinutes(), 2)}:${pad(time.getSeconds(), 2)}.${pad(time.getMilliseconds(), 3)}`
         const formattedMutation = mutationTransformer(mutation)
         const message = `mutation ${mutation.type}${formattedTime}`
-        const startMessage = collapsed
-          ? logger.groupCollapsed
-          : logger.group
+        const startMessage = collapsed ? logger.groupCollapsed : logger.group
 
         // render
         try {
