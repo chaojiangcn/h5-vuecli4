@@ -11,11 +11,16 @@ module.exports = {
   outputDir: 'dist',
   css: {
     loaderOptions: {
+      // 生产环境css提取到单独的css文件
+      // extract: true,
+      css: {
+
+      },
       postcss: {
         plugins: [
           autoprefixer(),
           pxtorem({
-            rootValue: 75,
+            rootValue: 35.5,
             propList: ['*'],
           }),
         ],
@@ -48,6 +53,7 @@ module.exports = {
     // 第1个参数：别名，第2个参数：路径  （设置路径别名）
     config.resolve.alias
       .set('@views', resolve('./src/views'))
+      .set('@apis', resolve('./src/apis'))
       .set('@router', resolve('./src/router'))
       .set('@store', resolve('./src/store'))
       .set('@config', resolve('./src/config'))

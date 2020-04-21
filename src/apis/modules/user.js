@@ -1,6 +1,6 @@
-import axiosInstance from "../../plugins/axios";
+import request from '../../utils/request'
 
 export default {
-  login : (v) => axiosInstance({method:'POST',data:v,url:'/login'}),
-  getUserInfo : (v) => axiosInstance(v)
+  login : (v) => request('/login', v),
+  getUserInfo : (v) => request(v)
 }
