@@ -24,6 +24,7 @@ module.exports = {
   },
   lintOnSave: 'error', // 设置eslint报错时停止代码编译
   productionSourceMap: false, // 不需要生产环境的 source map（减小dist文件大小，加速构建）
+  transpileDependencies: [], // 自动检测Polyfill转换
   devServer: {
     open: true,  // npm run serve后自动打开页面
     host: '0.0.0.0',  // 匹配本机IP地址(默认是0.0.0.0)
