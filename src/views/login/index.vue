@@ -4,7 +4,7 @@
       <img src="../../assets/image/logo@2x.png" alt="">
     </div>
     <div class="title">
-      感受分布式商业 <br />
+      感受分布式商业 <br/>
       实现人与人之间的高效服务
     </div>
     <div class="user">
@@ -16,10 +16,8 @@
         <van-field
           v-model="phone"
           label=""
-          @input="handelInput"
           data-type="phone"
           placeholder="手机号"
-          :error-message="phoneErr"
           maxlength="11"
         ></van-field>
       </van-cell-group>
@@ -29,12 +27,13 @@
         center
         clearable
         label=""
+        @input="handelInput"
         placeholder="验证码"
         maxlength="4"
       >
         <template #button>
-          <van-button size="small" type="primary" :disabled="isSend" @click="sendSMS"><span
-            v-if="isSend">剩余</span>{{leftTime}}
+          <van-button size="small" type="primary" :disabled="isSend" @click="getSMS">
+            {{leftTime}}<span v-if="isSend">s</span>
           </van-button>
         </template>
       </van-field>
@@ -71,27 +70,25 @@
         isSend: false, // 是否发送验证码
         timer: null, // 定时器
         user: {
-          name:'六个字的昵称'
+          name: '六个字的昵称'
         }
       };
     },
     methods: {
       handelInput(e) {
-        if (!_testHook.is_phone(e)) {
-          this.phoneErr = '请输入正确的手机号';
-        } else {
-          this.phoneErr = '';
+        const self = this;
+        if (e.length === 4) {
+          self.isOk = true;
         }
-        ;
       },
-
-      sendSMS() {
+      getSMS() {
         let self = this;
+        if (!_testHook.is_phone(self.phone)) return Toast.fail('请输入正确的手机号');
         let param = {
           phone: self.phone
         };
         setTimeout(() => {
-
+          Toast.success('获取成功');
           self.leftTime = 60;
           self.isSend = true;
           self.isOk = true;
@@ -127,8 +124,12 @@
         let self = this;
         console.log('登录提交', self);
 
-        if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号')
-        if (!self.sms) return Toast('验证码不能为空')
+        if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号');
+        if (!self.sms) return Toast('验证码不能为空');
+
+        setTimeout(res => {
+
+        });
       }
     }
   };
@@ -136,21 +137,25 @@
 
 <style lang="less">
   .login {
-    margin-top: 70px;
+    margin-top: 50px;
   }
+
   .van-cell {
     padding-left: 0;
     padding-right: 0;
   }
+
   .van-button--small {
-    height: 34px;
-    line-height: 34px;
+    height: 32px;
+    line-height: 32px;
   }
+
   .van-field__control {
     padding: 5px;
     border-radius: 3px;
     background: #dcdee0;
   }
+
   .title {
     text-align: center;
     font-size: 20px;
@@ -161,10 +166,11 @@
   .user {
     font-size: 14px;
     font-weight: bold;
-    margin-top: 18px;
+    margin-top: 10px;
   }
+
   .form {
-    padding: 20px 50px;
+    padding: 10px 50px;
     box-sizing: border-box;
   }
 
@@ -173,6 +179,7 @@
     font-size: 10px;
     color: #282828;
     text-align: right;
+
     .text {
       font-size: 12px;
       color: #42b983;
