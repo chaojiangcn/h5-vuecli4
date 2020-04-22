@@ -1,14 +1,18 @@
 import apis from '@apis/index'
 
 // initial state
-// shape: [{ id, quantity }]
 const state = {
+  userInfo: {
+    name: '我是初始名字',
+    age: 22
+  },
   items: [],
-  checkoutStatus: null
+  checkoutStatus: 'null'
 }
 
 // getters
 const getters = {
+  getUserInfo: (state) => state.userInfo.age,
   cartProducts: (state, getters, rootState) => {
     return state.items.map(({ id, quantity }) => {
       const product = rootState.products.all.find(product => product.id === id)
@@ -29,6 +33,10 @@ const getters = {
 
 // actions
 const actions = {
+  updateUserInfo({ commit, state }, userInfo) {
+    console.log(userInfo)
+    commit('updateUser', userInfo)
+  },
   checkout({ commit, state }, products) {
     const savedCartItems = [...state.items]
     commit('setCheckoutStatus', null)
@@ -62,6 +70,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  updateUser(state, userInfo) {
+    state.userInfo = userInfo
+  },
   pushProductToCart(state, { id }) {
     state.items.push({
       id,
