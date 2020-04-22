@@ -81,7 +81,8 @@
           this.phoneErr = '请输入正确的手机号';
         } else {
           this.phoneErr = '';
-        };
+        }
+        ;
       },
 
       sendSMS() {
@@ -126,8 +127,8 @@
         let self = this;
         console.log('登录提交', self);
 
-        if(!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号')
-        if(!self.sms) return Toast('验证码不能为空')
+        if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号')
+        if (!self.sms) return Toast('验证码不能为空')
       }
     }
   };
