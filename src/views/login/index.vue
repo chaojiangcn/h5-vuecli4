@@ -1,7 +1,15 @@
 <template>
-  <div class="login">
+  <div class="content">
     <div class="login">
-      <img src="" alt="">
+      <img src="../../assets/image/logo@2x.png" alt="">
+    </div>
+    <div class="title">
+      感受分布式商业 <br />
+      实现人与人之间的高效服务
+    </div>
+    <div class="user">
+      <span>{{user.name}}</span>
+      邀请你帮Ta认证专家号
     </div>
     <div class="form">
       <van-cell-group>
@@ -10,7 +18,7 @@
           label=""
           @input="handelInput"
           data-type="phone"
-          placeholder="请输入手机号"
+          placeholder="手机号"
           :error-message="phoneErr"
           maxlength="11"
         ></van-field>
@@ -21,7 +29,7 @@
         center
         clearable
         label=""
-        placeholder="请输入短信验证码"
+        placeholder="验证码"
         maxlength="4"
       >
         <template #button>
@@ -31,7 +39,7 @@
         </template>
       </van-field>
 
-      <van-button type="primary" :disabled="!isOk" @click="submitForm" size="large">帮Ta认证
+      <van-button type="primary" :disabled="!isOk" @click="submitForm" block size="normal">帮Ta认证
       </van-button>
       <div class="userAgreement">
         登录即代表同意<a href="https://www.lingzhushijie.com/lingzhuPrivacy.html" class="text">《用户协议》</a>和
@@ -62,6 +70,9 @@
         isOk: false, // 是否可以提交数据
         isSend: false, // 是否发送验证码
         timer: null, // 定时器
+        user: {
+          name:'六个字的昵称'
+        }
       };
     },
     methods: {
@@ -122,19 +133,47 @@
   };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+  .login {
+    margin-top: 70px;
+  }
+  .van-cell {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .van-button--small {
+    height: 34px;
+    line-height: 34px;
+  }
+  .van-field__control {
+    padding: 5px;
+    border-radius: 3px;
+    background: #dcdee0;
+  }
+  .title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 25px;
+  }
+
+  .user {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 18px;
+  }
   .form {
-    padding: 50px;
+    padding: 20px 50px;
     box-sizing: border-box;
   }
 
   .userAgreement {
     margin-top: 20px;
-    font-size: 12px;
+    font-size: 10px;
     color: #282828;
-
+    text-align: right;
     .text {
-      font-size: 13px;
+      font-size: 12px;
       color: #42b983;
     }
   }
