@@ -5,11 +5,8 @@ import Device from '@utils/device'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    redirect: '/login'
-  },
+  { path: '/', redirect: '/login' },
+  { path: '*', redirect: '/login' },
   {
     path: '/login',
     name: 'login',

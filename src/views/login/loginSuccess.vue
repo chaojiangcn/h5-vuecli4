@@ -38,24 +38,28 @@
         document.title = '快来领主推荐，感受分布式商业';
         this.isWechat = Device.wechat
       },
+      download(){
+        window.location.href = 'http://d.lingzhuworld.cn'
+      },
       // 点击事件处理
       hanleClick() {
         console.log(111)
-        const self = this
-        if (self.isWechat) {
-          self.showTisi = true
-        } else if (!self.isWechat) {
-          console.log('22')
-            const param = JSON.stringify({
-              pid: this.orderId
-            })
-            if (self.state !== 1) {
-              self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=${param}`, `lingzhuworld://recommend/lord?tab=1&action=2&param=${param}`, self.download)
-            } else {
-              // self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=`+param,`lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`,self.download)
-              self.openApp(`ofbank://com.ofbank.lord/product?pid=${self.orderId}&type=1`, `lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`, self.download)
-            }
-          }
+        this.download();
+        // const self = this
+        // if (self.isWechat) {
+        //   self.showTisi = true
+        // } else if (!self.isWechat) {
+        //   console.log('22')
+        //     const param = JSON.stringify({
+        //       pid: this.orderId
+        //     })
+        //     if (self.state !== 1) {
+        //       self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=${param}`, `lingzhuworld://recommend/lord?tab=1&action=2&param=${param}`, self.download)
+        //     } else {
+        //       // self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=`+param,`lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`,self.download)
+        //       self.openApp(`ofbank://com.ofbank.lord/product?pid=${self.orderId}&type=1`, `lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`, self.download)
+        //     }
+        //   }
       },
       // 打开APP
       openApp(url, iosUrl, callback) {
