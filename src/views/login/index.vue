@@ -4,7 +4,8 @@
       <img src="../../assets/image/logo@2x.png" alt="">
     </div>
     <div class="title">
-      感受分布式商业 <br/>
+      感受分布式商业
+      <br>
       实现人与人之间的高效服务
     </div>
     <div class="user">
@@ -49,11 +50,14 @@
 </template>
 
 <script>
-  import { Row, Col, Field, Button, Toast } from 'vant';
-  import { _testHook } from '@utils/validator';
+  import {
+    Row, Col, Field, Button, Toast
+  } from 'vant'
+  import { _testHook } from '@utils/validator'
+  import router from '../../router'
 
   export default {
-    name: 'login',
+    name: 'Login',
     components: {
       [Field.name]: Field,
       [Row.name]: Row,
@@ -72,38 +76,36 @@
         user: {
           name: '六个字的昵称'
         }
-      };
+      }
     },
     methods: {
       handelInput(e) {
-        const self = this;
+        const self = this
         if (e.length === 4) {
-          self.isOk = true;
+          self.isOk = true
         }
       },
       getSMS() {
-        let self = this;
-        if (!_testHook.is_phone(self.phone)) return Toast.fail('请输入正确的手机号');
-        let param = {
+        const self = this
+        if (!_testHook.is_phone(self.phone)) return Toast.fail('请输入正确的手机号')
+        const param = {
           phone: self.phone
-        };
+        }
         setTimeout(() => {
-          Toast.success('获取成功');
-          self.leftTime = 60;
-          self.isSend = true;
-          self.isOk = true;
+          Toast.success('获取成功')
+          self.leftTime = 60
+          self.isSend = true
           self.timer = setInterval(() => {
             if (self.leftTime > 0 && self.leftTime <= 60) {
-              self.leftTime--;
+              self.leftTime -= 1
             } else {
-              self.isSend = false;
-              clearInterval(this.timer);
-              self.leftTime = '请点击重试';
-              self.timer = null;
+              self.isSend = false
+              clearInterval(this.timer)
+              self.leftTime = '请点击重试'
+              self.timer = null
             }
-
-          }, 1000);
-        }, 2000);
+          }, 1000)
+        }, 2000)
         // apis.userApis.login(param).then(res => {
         //   console.log(res);
         //   self.leftTime = 60;
@@ -118,21 +120,23 @@
         //
         //   },1000);
         // })
+        return ''
       },
 
       submitForm() {
-        let self = this;
-        console.log('登录提交', self);
+        const self = this
+        console.log('登录提交', self)
 
-        if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号');
-        if (!self.sms) return Toast('验证码不能为空');
+        if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号')
+        if (!self.sms) return Toast('验证码不能为空')
 
-        setTimeout(res => {
-
-        });
+        setTimeout((res) => {
+          this.$router.push('./loginSuccess')
+        }, 2000)
+        return ''
       }
     }
-  };
+  }
 </script>
 
 <style lang="less">
@@ -146,14 +150,14 @@
   }
 
   .van-button--small {
-    height: 32px;
-    line-height: 32px;
+    height: 34px;
+    line-height: 34px;
   }
 
   .van-field__control {
-    padding: 5px;
+    padding: 6px;
     border-radius: 3px;
-    background: #dcdee0;
+    background: #F3F6F8;
   }
 
   .title {

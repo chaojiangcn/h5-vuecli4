@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Device from '@utils/device';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Device from '@utils/device'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -20,21 +20,21 @@ const routes = [
     name: 'loginSuccess',
     component: () => import('../views/login/loginSuccess')
   }
-];
+]
 
 const router = new VueRouter({
   // mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  routes
+})
 
 router.beforeEach((to, from, next) => {
   // 这里可以做页面拦截，在这里面做权限处理
   if (Device.wechat) {
-    next('/loginSuccess');
+    next('/loginSuccess')
   } else {
-    next();
+    next()
   }
-});
+})
 
-export default router;
+export default router
