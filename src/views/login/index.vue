@@ -34,7 +34,8 @@
       <van-button type="primary" :disabled="!isOk" @click="submitForm" size="large">帮Ta认证
       </van-button>
       <div class="userAgreement">
-        登录即代表同意<a href="@" class="text">《用户协议》</a>和<a href="@" class="text">《隐私政策》</a>
+        登录即代表同意<a href="https://www.lingzhushijie.com/lingzhuPrivacy.html" class="text">《用户协议》</a>和
+        <a href="https://www.lingzhushijie.com/lingzhu2PrivacyPolicy.html" class="text">《隐私政策》</a>
       </div>
     </div>
   </div>
