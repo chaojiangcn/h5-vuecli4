@@ -11,18 +11,23 @@ module.exports = {
   outputDir: 'dist',
   css: {
     loaderOptions: {
+      // 生产环境css提取到单独的css文件
+      // extract: true,
+      css: {
+
+      },
       postcss: {
         plugins: [
           autoprefixer(),
           pxtorem({
-            rootValue: 75,
+            rootValue: 35.5,
             propList: ['*'],
           }),
         ],
       },
     },
   },
-  lintOnSave: 'error', // 设置eslint报错时停止代码编译
+  lintOnSave: 'warning', // 设置eslint报错时停止代码编译
   productionSourceMap: false, // 不需要生产环境的 source map（减小dist文件大小，加速构建）
   transpileDependencies: [], // 自动检测Polyfill转换
   devServer: {
@@ -48,8 +53,10 @@ module.exports = {
     // 第1个参数：别名，第2个参数：路径  （设置路径别名）
     config.resolve.alias
       .set('@views', resolve('./src/views'))
+      .set('@apis', resolve('./src/apis'))
       .set('@router', resolve('./src/router'))
       .set('@store', resolve('./src/store'))
+      .set('@config', resolve('./src/config'))
       .set('@utils', resolve('./src/utils'));
   },
   // 配置打包 js、css文件为.gz格式，优化加载速度  （参考：https://blog.csdn.net/qq_31677507/article/details/102742196）
