@@ -3,91 +3,137 @@
     <div class="login">
       <img src="" alt="">
     </div>
+    <div class="title">
+      已帮Ta认证成功
+    </div>
     <div class="form">
-      <van-cell-group>
-        <van-field
-          v-model="phone"
-          label=""
-          @input="handelInput"
-          data-type="phone"
-          placeholder="请输入手机号"
-          :error-message="phoneErr"
-          maxlength="11"
-        ></van-field>
-      </van-cell-group>
-
-      <van-field
-        v-model="sms"
-        center
-        clearable
-        label=""
-        placeholder="请输入短信验证码"
-        maxlength="4"
-      >
-        <template #button>
-          <van-button size="small" type="primary" @click="sendSMS">{{leftTime}}</van-button>
-        </template>
-      </van-field>
-
-      <van-button type="primary" :disabled="!isOk" @click="submitForm" size="large">帮Ta认证</van-button>
-      <div class="userAgreement">
-          登录即代表同意<a href="@" class="text">《用户协议》</a>和<a href="@" class="text">《隐私政策》</a>
-      </div>
+      <van-button type="primary" @click="hanleClick" size="large">打开APP查看跟多内容</van-button>
+    </div>
+    <div class="showTisi" v-if="isWechat && showTisi" @click="showTisi=false">
+      <img :src="imgUrl" alt="">
     </div>
   </div>
 </template>
 
 <script>
-  import { Row, Col, Field, Button } from 'vant';
-  import { _testHook } from '@utils/validator';
-  import  apis  from '../../apis/index'
+  import Device from '@utils/device';
+  import { Button } from 'vant';
 
   export default {
     name: 'index',
     components: {
-      [Field.name]: Field,
-      [Row.name]: Row,
-      [Col.name]: Col,
       [Button.name]: Button
+    },
+    created() {
+      this.initData();
     },
     data() {
       return {
-        sms: '',
-        phone: '',
-        phoneErr: '',
-        leftTime: '发送验证码',
-        isOk: false,
+        showTisi: false,
+        isWechat: Device.wechat
       };
     },
     methods: {
-      handelInput(e) {
-        if (!_testHook.is_phone(e)) {
-          this.phoneErr = '请输入正确的手机号';
+      initData() {
+        document.title = '快来领主推荐，感受分布式商业';
+      },
+      // 点击事件处理
+      hanleClick() {
+        let self = this;
+        if (self.isWechat) {
+          self.showTisi = true;
         } else {
-          this.phoneErr = '';
-        };
+          if (!self.isWechat && self.orderId) {
+            let param = JSON.stringify({
+              pid: this.orderId
+            });
+            if (self.state != 1) {
+              self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=` + param, `lingzhuworld://recommend/lord?tab=1&action=2&param=` + param, self.download);
 
-      },
-
-      sendSMS() {
-        let self = this;
-        let param = {
-          phone: self.phone
+            } else {
+              // self.openApp(`lingzhuworld://recommend/lord?tab=1&action=2&param=`+param,`lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`,self.download)
+              self.openApp(`ofbank://com.ofbank.lord/product?pid=${self.orderId}&type=1`, `lingzhu-applinks://${encodeURIComponent(`http://www.lingzhu.com?pid=${self.orderId}&type=1`)}`, self.download);
+            }
+          }
         }
-        apis.userApis.login(param).then(res => {
-          console.log(res);
-          self.leftTime = 60;
-          setInterval(()=>{
-            self.leftTime--
-          },1000)
-        })
       },
+      // 打开APP
+      openApp(url, iosUrl, callback) {
+        let { isAndroid, isIOS, isIOS9 } = this.detectVersion();
+        if (isAndroid || isIOS) {
+          let timeout,
+            t = 4000,
+            hasApp = true;
+          let openScript = setTimeout(function () {
+            if (!hasApp) {
+              callback && callback();
+            }
+            document.body.removeChild(ifr);
+          }, 5000);
 
-      submitForm() {
-        let self = this;
-        console.log('登录提交', self);
+          let t1 = Date.now();
+          let ifr = document.createElement('iframe');
+          if (isAndroid) {
+            ifr.setAttribute('src', url);
+          } else {
+            ifr.setAttribute('src', iosUrl);
+          }
 
-      }
+          ifr.setAttribute('style', 'display:none');
+          document.body.appendChild(ifr);
+
+          timeout = setTimeout(function () {
+            let t2 = Date.now();
+            if (t2 - t1 < t + 100) {
+              hasApp = false;
+            }
+          }, t);
+        }
+
+        if (isIOS9) {
+          location.href = iosUrl;
+          setTimeout(function () {
+            callback && callback();
+          }, 500);
+        }
+      },
+      // 识别手机系统版本
+      detectVersion() {
+        let isAndroid,
+          isIOS,
+          isIOS9,
+          version,
+          u = navigator.userAgent,
+          ua = u.toLowerCase();
+
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {   //android终端或者uc浏览器
+          //Android系统
+          isAndroid = true;
+        }
+
+        if (ua.indexOf('like mac os x') > 0) {
+          //ios
+          let regStr_saf = /os [\d._]*/gi;
+          let verinfo = ua.match(regStr_saf);
+          version = (verinfo + '').replace(/[^0-9|_.]/ig, '')
+            .replace(/_/ig, '.');
+        }
+        let version_str = version + '';
+        if (version_str != 'undefined' && version_str.length > 0) {
+          version = parseInt(version);
+          if (version >= 8) {
+            // ios9以上
+            isIOS9 = true;
+          } else {
+            isIOS = true;
+          }
+        }
+        return {
+          isAndroid,
+          isIOS,
+          isIOS9
+        };
+      },
     }
   };
 </script>
@@ -97,13 +143,22 @@
     padding: 50px;
     box-sizing: border-box;
   }
-  .userAgreement {
-    margin-top: 20px;
-    font-size: 12px;
-    color: #282828;
-    .text {
-      font-size: 13px;
-      color:#42b983;
+
+  .showTisi {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    text-align: right;
+
+    img {
+      width: 70%;
+      position: absolute;
+      top: 0.2rem;
+      right: 0.2rem;
     }
   }
 

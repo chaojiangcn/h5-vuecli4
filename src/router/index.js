@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import Device from '@utils/device';
 
 Vue.use(VueRouter);
 
@@ -8,20 +8,17 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    redirect: '/login'
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('../views/login/index')
+  },
+  {
+    path: '/loginSuccess',
+    name: 'loginSuccess',
+    component: () => import('../views/login/loginSuccess')
   }
 ];
 
@@ -29,6 +26,15 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  // 这里可以做页面拦截，在这里面做权限处理
+  if (Device.wechat) {
+    next('/loginSuccess');
+  } else {
+    next();
+  }
 });
 
 export default router;
