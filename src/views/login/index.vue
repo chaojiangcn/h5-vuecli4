@@ -198,12 +198,10 @@
     height: 37px;
     line-height: 37px;
     font-size: 15px;
-    background: #1ACEAE;
     border-radius: 23px;
   }
 
   .van-button--primary {
-    background: #1ACEAE;
     border-radius: 23px;
   }
 

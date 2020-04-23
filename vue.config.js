@@ -13,7 +13,10 @@ module.exports = {
   css: {
     loaderOptions: {
       less: {
-        hack: 'true; @import "./assets/style/var.less";'
+        // hack: 'true; @import "./assets/style/var.less";' //全局替换
+        modifyVars: {
+          '@green': '#1ACEAE',
+        }
       },
       // 生产环境css提取到单独的css文件
       // extract: true,
