@@ -37,14 +37,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // 这里可以做页面拦截，在这里面做权限处理
-  if (Device.wechat && to.name !== 'loginSuccess') {
-    next('/loginSuccess')
-  } else {
-    next()
-  }
-})
-router.beforeEach((to, from, next) => {
   if (to.path === '/') {
     next({
       name: 'login' // 跳转到homeName页
