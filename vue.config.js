@@ -15,7 +15,7 @@ module.exports = {
       less: {
         // hack: 'true; @import "./assets/style/var.less";' //全局替换
         modifyVars: {
-          '@green': '#1ACEAE',
+          '@green': '#1ACEAE'
         }
       },
       // 生产环境css提取到单独的css文件
@@ -41,7 +41,7 @@ module.exports = {
     port: 8989, // 开发服务器运行端口号
     proxy: {
       '/api': {
-        target: 'http://192.168.1.118:8080', // 代理接口地址
+        target: 'https://dev.lingzhushijie.com', // 代理接口地址
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 是否跨域
         pathRewrite: {

@@ -14,6 +14,7 @@ export const ROUTER_DEFAULT_CONFIG = {
 
 // axios 默认配置
 export const AXIOS_DEFAULT_CONFIG = {
+  baseURL: process.env.VUE_APP_API,
   timeout: 20000,
   maxContentLength: 2000,
   headers: {}
