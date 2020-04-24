@@ -17,6 +17,7 @@
         <van-field
           v-model="phone"
           label=""
+          @input="handelInputPhone"
           data-type="phone"
           placeholder="手机号"
           maxlength="11"
@@ -30,7 +31,7 @@
         label=""
         @input="handelInput"
         placeholder="验证码"
-        maxlength="4"
+        maxlength="6"
       >
         <template #button>
           <van-button size="small" type="primary" :disabled="isSend" @click="getSMS">
@@ -57,11 +58,12 @@
 
 <script>
   import {
-    Row, Col, Field, Button, Toast
+    CellGroup, Row, Col, Field, Button, Toast
   } from 'vant'
   import { _testHook } from '@utils/validator'
   import apis from '@apis/index'
   import { getUrlParam } from '../../utils/util'
+  import { strFilter } from '../../utils/formCheck'
 
   export default {
     name: 'Login',
@@ -69,7 +71,8 @@
       [Field.name]: Field,
       [Row.name]: Row,
       [Col.name]: Col,
-      [Button.name]: Button
+      [Button.name]: Button,
+      [CellGroup.name]: CellGroup
     },
     data() {
       return {
@@ -83,7 +86,8 @@
         user: {
           name: '---',
           status: null,
-          uid: null
+          uid: null,
+          expertno_id: null
         }
       }
     },
@@ -95,12 +99,22 @@
         this.user.name = getUrlParam('name') ? getUrlParam('name') : this.user.name
         this.user.uid = getUrlParam('uid') ? getUrlParam('uid') : this.user.uid
         this.user.status = getUrlParam('status') ? getUrlParam('status') : this.user.status
+        this.user.expertno_id = getUrlParam('expertno_id') ? getUrlParam('expertno_id') : this.user.expertno_id
+      },
+      handelInputPhone(e) {
+        const self = this
+        // 输入处理
+        e = strFilter(e)
+        self.phone = e
       },
       handelInput(e) {
         const self = this
-        if (e.length === 4) {
+        // 输入处理
+        e = strFilter(e)
+        if (/^\d{4,6}$/.test(e)) {
           self.isOk = true
         }
+        self.sms = e
       },
       // 发送验证码
       getSMS() {
@@ -132,7 +146,7 @@
       authentication(uid) {
         const self = this
         const param = {
-          expertno_id: uid,
+          expertno_id: self.user.expertno_id,
           invite_uid: Number(self.user.uid)
         }
         apis.userApis.helpAuthentication(param)
@@ -148,9 +162,10 @@
         const self = this
         if (!(self.phone && _testHook.is_phone(self.phone))) return Toast('请输入正确的手机号')
         if (!self.sms) return Toast('验证码不能为空')
+        if (!/^\d{4,6}$/.test(self.sms)) return Toast('验证格式错误')
         const param = {
-          phone: '10012345678',
-          code: 1233
+          phone: self.phone,
+          code: Number(self.sms)
         }
         apis.userApis.Login(param)
           .then((res) => {
