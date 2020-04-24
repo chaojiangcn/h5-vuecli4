@@ -80,5 +80,3 @@ export function assert(condition, msg) {
 export function partial(fn, arg) {
   return fn(arg)
 }
-
-

@@ -1,21 +1,17 @@
 import store from '../../store/index'
-import { CONSOLE_REQUEST_ENABLE, CONSOLE_RESPONSE_ENABLE } from '../index.js'
+import { CONSOLE_REQUEST_ENABLE } from '../index'
 
 export function requestSuccessFunc(requestObj) {
   CONSOLE_REQUEST_ENABLE && console.warn('【request-interceptor】', `url: ${requestObj.url}`, requestObj)
   // 自定义请求拦截逻辑，可以处理权限，请求发送监控等
   const { token } = store.getters['user/getUserInfo']
   console.log('用户token：', token)
-  if (token) {
-    requestObj.headers.token = token
-  }
+  token && (requestObj.headers.token = token)
   return requestObj
 }
 
 export function requestFailFunc(requestError) {
   // 自定义发送请求失败逻辑，断网，请求发送监控等
-  // ...
-
   return Promise.reject(requestError)
 }
 
@@ -45,6 +41,5 @@ export function responseSuccessFunc(responseObj) {
 
 export function responseFailFunc(responseError) {
   // 响应失败，可根据 responseError.message 和 responseError.response.status 来做监控处理
-  // ...
   return Promise.reject(responseError)
 }
