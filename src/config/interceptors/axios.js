@@ -1,11 +1,14 @@
-// eslint-disable-next-line import/extensions
+import store from '../../store/index'
 import { CONSOLE_REQUEST_ENABLE, CONSOLE_RESPONSE_ENABLE } from '../index.js'
 
 export function requestSuccessFunc(requestObj) {
   CONSOLE_REQUEST_ENABLE && console.warn('【request-interceptor】', `url: ${requestObj.url}`, requestObj)
   // 自定义请求拦截逻辑，可以处理权限，请求发送监控等
-  // ...
-
+  const { token } = store.getters['user/getUserInfo']
+  console.log('用户token：', token)
+  if (token) {
+    requestObj.headers.token = token
+  }
   return requestObj
 }
 
@@ -18,31 +21,24 @@ export function requestFailFunc(requestError) {
 
 export function responseSuccessFunc(responseObj) {
   // 自定义响应成功逻辑，全局拦截接口，根据不同业务做不同处理，响应成功监控等
-  // ...
-  // 假设我们请求体为
-  // {
-  //     code: 1010,
-  //     msg: 'this is a msg',
-  //     data: null
-  // }
-
   const resData = responseObj.data
   const { code } = resData
 
   switch (code) {
-    case 0: // 如果业务成功，直接进成功回调
-      return resData.data
+    case 200: // 如果业务成功，直接进成功回调
+      return resData
     case 1111:
       // 如果业务失败，根据不同 code 做不同处理
       // 比如最常见的授权过期跳登录
       // 特定弹窗
       // 跳转特定页面等
 
-      location.href = xxx // 这里的路径也可以放到全局配置里
-      return
+      // location.href = xxx // 这里的路径也可以放到全局配置里
+      return ''
     default:
       // 业务中还会有一些特殊 code 逻辑，我们可以在这里做统一处理，也可以下方它们到业务层
-      !responseObj.config.noShowDefaultError && GLOBAL.vbus.$emit('business.response.incorrect', resData.msg)
+      // eslint-disable-next-line max-len
+      // !responseObj.config.noShowDefaultError && GLOBAL.vbus.$emit('business.response.incorrect', resData.msg)
       return Promise.reject(resData)
   }
 }

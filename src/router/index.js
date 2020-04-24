@@ -5,8 +5,14 @@ import Device from '@utils/device'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '*', redirect: '/login' },
+  {
+    path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '*',
+    redirect: '/login'
+  },
   {
     path: '/login',
     name: 'login',
@@ -30,14 +36,6 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   // 这里可以做页面拦截，在这里面做权限处理
-//   if (Device.wechat) {
-//     next('/loginSuccess')
-//   } else {
-//     next()
-//   }
-// })
 router.beforeEach((to, from, next) => {
   if (to.path === '/') {
     next({
