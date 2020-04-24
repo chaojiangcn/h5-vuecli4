@@ -41,7 +41,7 @@
       </van-field>
       <van-button
         type="primary"
-        style="margin-top: 17px"
+        class="footBut"
         :disabled="!isOk"
         @click="submitForm"
         block
@@ -237,25 +237,31 @@
   }
 
   .user {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 57px;
   }
 
   .form {
-    padding: 10px 30px;
+    padding: 20px  30px 10px;
     box-sizing: border-box;
+  }
+
+  .footBut {
+    margin-top: 10px;
+    .van-button__text {
+      font-size: 19px;
+    }
   }
 
   .userAgreement {
     margin-top: 6px;
     font-size: 14px;
     color: #666666;
-    text-align: right;
+    text-align: center;
 
     .text {
-      color: #42b983;
+      color: #1ACEAE;
     }
   }
-
 </style>
