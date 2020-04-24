@@ -239,12 +239,16 @@
   .user {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 57px;
+    margin-top: 30px;
   }
 
   .form {
     padding: 20px  30px 10px;
     box-sizing: border-box;
+
+    .van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after {
+      border-width: 0;
+    }
   }
 
   .footBut {
