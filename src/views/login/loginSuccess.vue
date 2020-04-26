@@ -35,7 +35,7 @@
     },
     methods: {
       initData() {
-        document.title = '快来领主推荐，感受分布式商业';
+        document.title = '快来领主推荐，感受分布式商业'
         this.isWechat = Device.wechat
       },
       download(){

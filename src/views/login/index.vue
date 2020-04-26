@@ -31,7 +31,7 @@
         label=""
         @input="handelInput"
         placeholder="验证码"
-        maxlength="6"
+        maxlength="4"
       >
         <template #button>
           <van-button size="small" type="primary" :disabled="isSend" @click="getSMS">
@@ -135,7 +135,7 @@
               } else {
                 self.isSend = false
                 clearInterval(this.timer)
-                self.leftTime = '请点击重试'
+                self.leftTime = '重新获取'
                 self.timer = null
               }
             }, 1000)
