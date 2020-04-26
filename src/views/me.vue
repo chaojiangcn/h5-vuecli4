@@ -2,7 +2,7 @@
   <div>
     {{userInfo}}
     <button @click="test">更新用户信息</button>
-    <p><h1>{{checkoutStatu}}</h1>{{des}}</p>
+    <h1>{{checkoutStatu}}</h1>{{des}}<p />
     <p>{{checkoutStatu}}</p>
   </div>
 </template>
