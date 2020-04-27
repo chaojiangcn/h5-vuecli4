@@ -147,7 +147,7 @@
         const self = this
         const param = {
           expertno_id: self.user.expertno_id,
-          invite_uid: Number(self.user.uid)
+          invite_uid: self.user.uid
         }
         apis.userApis.helpAuthentication(param)
           .then((res) => {
