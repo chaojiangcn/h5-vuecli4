@@ -8,6 +8,7 @@ const plugins = [
     'vant'
   ]
 ]
+// 生产环境取消console
 if (IS_PROD) {
   plugins.push('transform-remove-console')
 }

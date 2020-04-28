@@ -1,8 +1,8 @@
 var regexs = {
   // 匹配 max_length(12) => ["max_length",12]
-  rule:/^(.+?)\((.+)\)$/,
+  rule: /^(.+?)\((.+)\)$/,
   // 数字
-  numericRegex:/^[0-9]+$/,
+  numericRegex: /^[0-9]+$/,
   /**
    * @descrition:邮箱规则
    * 1.邮箱以a-z、A-Z、0-9开头，最小长度为1.
@@ -11,7 +11,7 @@ var regexs = {
    * 4.右则部分可分为两部分，第一部分为邮件提供商域名地址，第二部分为域名后缀，现已知的最短为2位。最长的为6为。
    * 5.邮件提供商域可以包含特殊字符-、_、.
    */
-  email:/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
+  email: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
   /**
    * [ip ipv4、ipv6]
    * "192.168.0.0"
@@ -20,13 +20,13 @@ var regexs = {
    * "192.168.254.10"
    * "192.168.254.10.1.1"
    */
-  ip:/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])((\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}|(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){5})$/,
+  ip: /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])((\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}|(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){5})$/,
   /**
    * @descrition:判断输入的参数是否是个合格的固定电话号码。
    * 待验证的固定电话号码。
    * 国家代码(2到3位)-区号(2到3位)-电话号码(7到8位)-分机号(3位)
    **/
-  fax:/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/,
+  fax: /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/,
   /**
    *@descrition:手机号码段规则
    * 13段：130、131、132、133、134、135、136、137、138、139
@@ -36,111 +36,132 @@ var regexs = {
    * 18段：180、181、182、183、184、185、186、187、188、189
    * 国际码 如：中国(+86)
    */
-  phone:/^((\+?[0-9]{1,4})|(\(\+86\)))?(13[0-9]|14[57]|15[012356789]|16[0-9]|17[03678]|18[0-9])\d{8}$/,
+  phone: /^((\+?[0-9]{1,4})|(\(\+86\)))?(13[0-9]|14[57]|15[012356789]|16[0-9]|17[03678]|18[0-9])\d{8}$/,
   /**
    * @descrition 匹配 URL
    */
-  url:/[a-zA-z]+:\/\/[^\s]/,
+  url: /[a-zA-z]+:\/\/[^\s]/,
   money: /^(0|[1-9]\d*)(\.\d+)?$/,
   english: /^[A-Za-z]+$/,
   chinese: /^[\u0391-\uFFE5]+$/,
-  percent: /^(?:[1-9][0-9]?|100)(?:\.[0-9]{1,2})?$/,
+  percent: /^(?:[1-9][0-9]?|100)(?:\.[0-9]{1,2})?$/
 }
 
 export let _testHook = {
   // 验证合法邮箱
-  is_email: function(field){return regexs.email.test( backVal(field) );},
+  is_email: function(field) {
+    return regexs.email.test(backVal(field))
+  },
   // 验证合法 ip 地址
-  is_ip: function(field){return regexs.ip.test( backVal(field) );},
+  is_ip: function(field) {
+    return regexs.ip.test(backVal(field))
+  },
   // 验证传真
-  is_fax:function(field){return regexs.fax.test( backVal(field) );},
+  is_fax: function(field) {
+    return regexs.fax.test(backVal(field))
+  },
   // 验证座机
-  is_tel:function(field){return regexs.fax.test( backVal(field) );},
+  is_tel: function(field) {
+    return regexs.fax.test(backVal(field))
+  },
   // 验证手机
-  is_phone:function(field){return regexs.phone.test( backVal(field) );},
+  is_phone: function(field) {
+    return regexs.phone.test(backVal(field))
+  },
   // 验证URL
-  is_url:function(field){return regexs.url.test( backVal(field) );},
-  is_money: function (field) {return regexs.money.test(backVal(field));},
-  is_english: function (field) {return regexs.english.test(backVal(field));},
-  is_chinese: function (field) {return regexs.chinese.test(backVal(field));},
-  is_percent: function (field) {return regexs.percent.test(backVal(field));},
+  is_url: function(field) {
+    return regexs.url.test(backVal(field))
+  },
+  is_money: function(field) {
+    return regexs.money.test(backVal(field))
+  },
+  is_english: function(field) {
+    return regexs.english.test(backVal(field))
+  },
+  is_chinese: function(field) {
+    return regexs.chinese.test(backVal(field))
+  },
+  is_percent: function(field) {
+    return regexs.percent.test(backVal(field))
+  },
   // 是否为必填
   required: function(field) {
-    var value =  backVal(field) ;
+    var value = backVal(field)
     if ((field.type === 'checkbox') || (field.type === 'radio')) {
-      return (field.checked === true);
+      return (field.checked === true)
     }
-    return (value !== null && value !== '');
+    return (value !== null && value !== '')
   },
   // 最大长度
-  max_length: function(field, length){
-    if (!regexs.numericRegex.test(length)) return false;
-    return ( backVal(field) .length <= parseInt(length, 10));
+  max_length: function(field, length) {
+    if (!regexs.numericRegex.test(length)) return false
+    return (backVal(field).length <= parseInt(length, 10))
   },
   // 最小长度
-  min_length: function(field, length){
-    if (!regexs.numericRegex.test(length)) return false;
-    return ( backVal(field) .length >= parseInt(length, 10));
+  min_length: function(field, length) {
+    if (!regexs.numericRegex.test(length)) return false
+    return (backVal(field).length >= parseInt(length, 10))
   },
   // 指定字段内容是否相同
-  same: function (field, newField) {
-    var value1 = backVal(field);
-    var value2 = backVal(this.fields[newField].element);
+  same: function(field, newField) {
+    var value1 = backVal(field)
+    var value2 = backVal(this.fields[newField].element)
 
-    return value1 == value2;
+    return value1 == value2
   },
   // 拒绝与某个字段相等,比如登录密码与交易密码情况
-  different: function (field, newField) {
+  different: function(field, newField) {
     return !this.same(field, newField)
   },
   // 直接判断字符串是否相等
-  contains: function (field, value) {
-    var value1 = backVal(field);
+  contains: function(field, value) {
+    var value1 = backVal(field)
 
-    return value1 == value;
+    return value1 == value
   },
   // 用于服务条款,是否同意时相当有用,不限制checkbox与radio,有可能submit button直接附带value情况
-  accepted: function (field) {
-    var value = backVal(field);
+  accepted: function(field) {
+    var value = backVal(field)
 
-    return 'YES' == value.toUpperCase() || 'ON' == value.toUpperCase() || 1 == value || false == value ? true : false;
+    return 'YES' == value.toUpperCase() || 'ON' == value.toUpperCase() || 1 == value || false == value ? true : false
   }
 }
 
-var Validator = function (formelm, fields, callback) {
+var Validator = function(formelm, fields, callback) {
 
   // 将验证方法绑到 Validator 对象上去
-  for (var a in _testHook) this[camelCase(a)] = _testHook[a];
+  for (var a in _testHook) this[camelCase(a)] = _testHook[a]
 
   // 如果不存在 form 对象
-  if (!formelm) return this;
+  if (!formelm) return this
 
-  this.callback = callback || function(){};
-  this.form = _formElm(formelm) || {};
-  this.errors = [];
-  this.fields = {};
-  this.handles = {};
-
+  this.callback = callback || function() {
+  }
+  this.form = _formElm(formelm) || {}
+  this.errors = []
+  this.fields = {}
+  this.handles = {}
 
   for (var i = 0, fieldLength = fields.length; i < fieldLength; i++) {
-    var field = fields[i];
+    var field = fields[i]
     // 如果通过不正确，我们需要跳过该领域。
     if ((!field.name && !field.names) || !field.rules) {
-      console.warn(field);
-      continue;
+      console.warn(field)
+      continue
     }
-    addField(this, field, field.name);
+    addField(this, field, field.name)
   }
 
   // 使用 submit 按钮拦截
-  var _onsubmit = this.form.onsubmit;
+  var _onsubmit = this.form.onsubmit
   this.form.onsubmit = (function(that) {
     return function(evt) {
       try {
-        return that.validate(evt) && (_onsubmit === undefined || _onsubmit());
-      } catch(e) {}
-    };
-  })(this);
+        return that.validate(evt) && (_onsubmit === undefined || _onsubmit())
+      } catch (e) {
+      }
+    }
+  })(this)
 }
 
 Validator.prototype = {
@@ -149,90 +170,90 @@ Validator.prototype = {
    * @param  {[type]} evt [description]
    * @return {[type]}     [JSON]
    */
-  validate:function(evt){
+  validate: function(evt) {
     // 特殊情况直接通过
-    if (this._passes) return this;
+    if (this._passes) return this
 
-    this.handles["ok"] = true;
-    this.handles["evt"] = evt;
-    this.errors = [];
+    this.handles['ok'] = true
+    this.handles['evt'] = evt
+    this.errors = []
 
     for (var key in this.fields) {
-      if(this.fields.hasOwnProperty(key)){
+      if (this.fields.hasOwnProperty(key)) {
         var field = this.fields[key] || {},
-          element = this.form[field.name];
-
+          element = this.form[field.name]
 
         if (element && element !== undefined) {
-          field.id = attributeValue(element, 'id');
-          field.element = element;
-          field.type = (element.length > 0) ? element[0].type : element.type;
-          field.value = attributeValue(element, 'value');
-          field.checked = attributeValue(element, 'checked');
+          field.id = attributeValue(element, 'id')
+          field.element = element
+          field.type = (element.length > 0) ? element[0].type : element.type
+          field.value = attributeValue(element, 'value')
+          field.checked = attributeValue(element, 'checked')
 
-          this._validateField(field);
+          this._validateField(field)
         }
       }
     }
 
     if (typeof this.callback === 'function') {
-      this.callback(this, evt);
+      this.callback(this, evt)
     }
 
     // 如果有错误，停止submit 提交
     if (this.errors.length > 0) {
       if (evt && evt.preventDefault) {
-        evt.preventDefault();
+        evt.preventDefault()
       } else if (event) {
         // IE 使用的全局变量
-        event.returnValue = false;
+        event.returnValue = false
       }
     }
 
-    return this;
+    return this
   },
-  passes: function () {
-    this._passes = true;
-    return this;
+  passes: function() {
+    this._passes = true
+    return this
   },
-  _validateField:function(field){
+  _validateField: function(field) {
 
     var rules = field.rules.split('|'),
-      isEmpty = (!field.value || field.value === '' || field.value === undefined);
+      isEmpty = (!field.value || field.value === '' || field.value === undefined)
 
-    for (var i = 0,ruleLength = rules.length; i < ruleLength; i++) {
-      var method = rules[i];
-      var parts = regexs.rule.exec(method);
+    for (var i = 0, ruleLength = rules.length; i < ruleLength; i++) {
+      var method = rules[i]
+      var parts = regexs.rule.exec(method)
 
-      var param = null;
-      var failed = false;
+      var param = null
+      var failed = false
 
       // 解析带参数的验证如 max_length(12)
-      if (parts) method = parts[1],param = parts[2];
+      if (parts) method = parts[1], param = parts[2]
 
       if (isEmpty && rules.indexOf('required') === -1) {
-        continue;
+        continue
       }
 
       if (typeof _testHook[method] === 'function') {
         if (!_testHook[method].apply(this, [field, param])) {
-          failed = true;
+          failed = true
         }
       }
-      if(regexs[method] && /^regexp\_/.test(method)){
+      if (regexs[method] && /^regexp\_/.test(method)) {
         if (!regexs[method].test(field.value)) {
-          failed = true;
+          failed = true
         }
       }
-      if(failed){
-        var message = (function(){
-          return field.display.split('|')[i] && field.display.split('|')[i].replace('{{'+field.name+'}}',field.value)
+      if (failed) {
+        var message = (function() {
+          return field.display.split('|')[i] && field.display.split('|')[i].replace('{{' + field.name + '}}', field.value)
         })()
 
-        var existingError,j;
+        var existingError,
+          j
         for (j = 0; j < this.errors.length; j += 1) {
           if (field.element === this.errors[j].element) {
-            existingError = this.errors[j];
+            existingError = this.errors[j]
           }
         }
 
@@ -244,12 +265,12 @@ Validator.prototype = {
           message: message,
           messages: [],
           rule: method
-        };
-        errorObject.messages.push(message);
-        if (!existingError) this.errors.push(errorObject);
+        }
+        errorObject.messages.push(message)
+        if (!existingError) this.errors.push(errorObject)
       }
     }
-    return this;
+    return this
   }
 }
 
@@ -258,11 +279,11 @@ Validator.prototype = {
  * @param  {[type]} string [字符串]
  * @return {[type]}        [字符串]
  */
-function camelCase(string){
+function camelCase(string) {
   // Support: IE9-11+
-  return string.replace( /\_([a-z])/g, function( all, letter ) {
-    return letter.toUpperCase();
-  });
+  return string.replace(/\_([a-z])/g, function(all, letter) {
+    return letter.toUpperCase()
+  })
 }
 
 /**
@@ -272,24 +293,26 @@ function camelCase(string){
  * @return {[type]}               [返回String，属性值]
  */
 function attributeValue(element, attributeName) {
-  var i,elementLength;
+  var i,
+    elementLength
   if ((element.length > 0) && (element[0].type === 'radio' || element[0].type === 'checkbox')) {
     for (i = 0, elementLength = element.length; i < elementLength; i++) {
       if (element[i].checked) {
-        return element[i][attributeName];
+        return element[i][attributeName]
       }
     }
-    return;
+    return
   }
-  return element[attributeName];
-};
+  return element[attributeName]
+}
+
 /**
  * [addField 构建具有所有需要验证的信息的主域数组]
  * @param {[type]} self      [Validator自己]
  * @param {[type]} field     [description]
  * @param {[type]} nameValue [description]
  */
-function addField(self,field, nameValue){
+function addField(self, field, nameValue) {
   self.fields[nameValue] = {
     name: nameValue,
     display: field.display || nameValue,
@@ -301,8 +324,8 @@ function addField(self,field, nameValue){
     checked: null
   }
   for (var a in field) {
-    if (field.hasOwnProperty(a)&&/^regexp\_/.test(a)) {
-      regexs[a] = field[a];
+    if (field.hasOwnProperty(a) && /^regexp\_/.test(a)) {
+      regexs[a] = field[a]
     }
   }
 }
@@ -312,8 +335,8 @@ function addField(self,field, nameValue){
  * @param  {[type]} elm [字符串或者节点对象]
  * @return {[type]}     [返回dom节点]
  */
-function _formElm(elm){
-  return (typeof elm === 'object') ? elm : document.forms[elm];
+function _formElm(elm) {
+  return (typeof elm === 'object') ? elm : document.forms[elm]
 }
 
 /**
@@ -321,7 +344,7 @@ function _formElm(elm){
  * @param  {[type]}              [Object or String]
  * @return {[type]}              [String]
  */
-function backVal(field){
-  return (typeof field === 'string')?field:field.value;
+function backVal(field) {
+  return (typeof field === 'string') ? field : field.value
 }
 

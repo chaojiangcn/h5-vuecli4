@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Device from '@utils/device'
 
 Vue.use(VueRouter)
 
@@ -21,7 +20,13 @@ const routes = [
   {
     path: '/me',
     name: 'Me',
-    component: () => import('../views/me')
+    component: () => import('../views/me'),
+    children: [
+      {
+        path: 'largeImageLoad',
+        component: () => import('../components/largeImageLoad')
+      }
+    ]
   },
   {
     path: '/loginSuccess',

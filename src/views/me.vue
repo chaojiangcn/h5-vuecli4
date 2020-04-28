@@ -4,6 +4,7 @@
     <button @click="test">更新用户信息</button>
     <h1>{{checkoutStatu}}</h1>{{des}}<p />
     <p>{{checkoutStatu}}</p>
+    <router-view></router-view>
   </div>
 </template>
 
